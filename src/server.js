@@ -914,8 +914,9 @@ app.use((error, req, res, _next) => {
 
 async function start() {
   await initDatabase();
-  app.listen(config.port, () => {
-    console.log(`${config.appName} is running on port ${config.port}`);
+  const host = process.env.HOST || "0.0.0.0";
+  app.listen(config.port, host, () => {
+    console.log(`${config.appName} is running on ${host}:${config.port}`);
   });
 }
 

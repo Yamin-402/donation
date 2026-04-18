@@ -11,7 +11,7 @@ function parseNumber(value, fallback) {
 
 const config = {
   appName: process.env.APP_NAME || "Donation Ledger",
-  port: parseNumber(process.env.PORT, 3000),
+  port: parseNumber(process.env.PORT, process.env.NODE_ENV === "production" ? 8080 : 3000),
   databaseUrl: process.env.DATABASE_URL || "",
   databaseSsl: parseBoolean(process.env.DATABASE_SSL),
   adminSignupCode: process.env.ADMIN_SIGNUP_CODE || "2664",
