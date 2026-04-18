@@ -1,0 +1,51 @@
+<%- include("partials/header") %>
+<%- include("partials/messages") %>
+
+<section class="auth-shell card narrow-card">
+  <h1>Create account</h1>
+
+  <form action="/signup" method="post" class="stack-form">
+    <label>
+      <span>Username</span>
+      <input
+        type="text"
+        name="username"
+        required
+        minlength="3"
+        maxlength="30"
+        pattern="[a-zA-Z0-9_]+"
+        value="<%= formData.username %>"
+      />
+    </label>
+
+    <label>
+      <span>Password</span>
+      <input type="password" name="password" required minlength="8" />
+    </label>
+
+    <label>
+      <span>Confirm password</span>
+      <input type="password" name="confirmPassword" required minlength="8" />
+    </label>
+
+    <button type="button" class="link-button" data-admin-toggle>
+      Secret admin option
+    </button>
+
+    <div class="hidden-panel <%= formData.adminCode ? 'revealed' : '' %>" data-admin-panel>
+      <label>
+        <span>Optional admin code</span>
+        <input type="password" name="adminCode" value="<%= formData.adminCode %>" />
+      </label>
+      <p class="subdued small-text">
+        Matching code creates an admin account.
+      </p>
+    </div>
+
+    <button type="submit" class="button">Create account</button>
+  </form>
+
+  <p class="muted-line"><a href="/login">Back to login</a></p>
+</section>
+
+<%- include("partials/footer") %>

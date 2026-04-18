@@ -1,0 +1,41 @@
+<%- include("partials/header") %>
+<%- include("partials/messages") %>
+
+<section class="hero">
+  <div class="hero-copy">
+    <span class="eyebrow">Donation for khair</span>
+    <h1>Private donor logs. Public total.</h1>
+    <p>Track donations, validate entries, and keep adjustments visible.</p>
+    <div class="hero-actions">
+      <a class="button" href="/signup">Create account</a>
+      <a class="button button-secondary" href="/login">Login</a>
+    </div>
+  </div>
+
+  <div class="hero-panel card">
+    <h2>Quick flow</h2>
+    <ol class="step-list">
+      <li>Sign up</li>
+      <li>Submit donation</li>
+      <li>Admin validates</li>
+      <li>Total updates</li>
+    </ol>
+  </div>
+</section>
+
+<section class="feature-grid">
+  <article class="card">
+    <h3>Private history</h3>
+    <p>Users see only their own records.</p>
+  </article>
+  <article class="card">
+    <h3>Validation first</h3>
+    <p>Pending entries need admin approval.</p>
+  </article>
+  <article class="card">
+    <h3>Open total</h3>
+    <p>Users see the live total and the adjustments to the total.</p>
+  </article>
+</section>
+
+<%- include("partials/footer") %>

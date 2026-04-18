@@ -1,0 +1,91 @@
+<%- include("partials/header") %>
+<%- include("partials/messages") %>
+
+<section class="page-heading">
+  <div>
+    <span class="eyebrow">Admin total log</span>
+    <h1>Log changes to the total</h1>
+  </div>
+</section>
+
+<section class="stats-grid single-stat-grid">
+  <article class="card stat-card spotlight">
+    <span class="stat-label">Current total</span>
+    <strong><%= formatCurrency(summary.public_total) %></strong>
+    <span class="stat-foot">Approved and removed values stay here with the admin log.</span>
+
+    <div class="summary-inline">
+      <div class="summary-chip">
+        <span class="mini-label">Approved</span>
+        <strong><%= formatCurrency(summary.approved_total) %></strong>
+      </div>
+      <div class="summary-chip">
+        <span class="mini-label">Removed</span>
+        <strong><%= formatCurrency(summary.removed_total) %></strong>
+      </div>
+      <% if (Number(summary.added_total) > 0) { %>
+        <div class="summary-chip">
+          <span class="mini-label">Added</span>
+          <strong><%= formatCurrency(summary.added_total) %></strong>
+        </div>
+      <% } %>
+    </div>
+  </article>
+</section>
+
+<section class="content-grid">
+  <article class="card">
+    <h2>Record a change</h2>
+    <form action="/admin/adjustments" method="post" class="stack-form">
+      <label>
+        <span>Adjustment type</span>
+        <select name="direction">
+          <option value="remove" <%= formData.direction === 'remove' ? 'selected' : '' %>>Remove value</option>
+          <option value="add" <%= formData.direction === 'add' ? 'selected' : '' %>>Add value</option>
+        </select>
+      </label>
+
+      <label>
+        <span>Amount</span>
+        <input type="number" name="amount" required min="0.01" step="0.01" value="<%= formData.amount %>" />
+      </label>
+
+      <label>
+        <span>Admin note</span>
+        <textarea name="note" rows="4" required placeholder="Explain why the total changed"><%= formData.note %></textarea>
+      </label>
+
+      <button type="submit" class="button">Save adjustment</button>
+    </form>
+  </article>
+
+  <article class="card">
+    <div class="section-title">
+      <h2>Recent admin log</h2>
+    </div>
+
+    <% if (!adjustments.length) { %>
+      <p class="empty-state">No adjustments recorded yet.</p>
+    <% } else { %>
+      <div class="stack-list">
+        <% adjustments.forEach((adjustment) => { %>
+          <article class="list-card">
+            <div class="list-card-top">
+              <strong class="<%= adjustment.amount < 0 ? 'negative-amount' : 'positive-amount' %>">
+                <%= formatCurrency(adjustment.amount) %>
+              </strong>
+              <span class="status-badge <%= adjustment.amount < 0 ? 'rejected' : 'approved' %>">
+                <%= adjustment.amount < 0 ? 'removal' : 'addition' %>
+              </span>
+            </div>
+            <p><strong>Note:</strong> <%= adjustment.note %></p>
+            <p><strong>Admin:</strong> <%= adjustment.admin_username %></p>
+            <p><strong>Date:</strong> <%= formatDate(adjustment.created_at) %></p>
+          </article>
+        <% }) %>
+      </div>
+    <% } %>
+  </article>
+</section>
+
+<%- include("partials/footer") %>

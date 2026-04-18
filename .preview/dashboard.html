@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Submit donation - Donation Ledger</title>
+    <link rel="stylesheet" href="file:///D:/Documents/The_web/public/styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container nav-shell">
+        <a class="brand" href="/dashboard">
+          <span class="brand-mark">DL</span>
+          <span>Donation Ledger</span>
+        </a>
+
+        <nav class="nav-links">
+          
+            <a class="active" href="/dashboard">Donate</a>
+            <a class="" href="/history">History</a>
+            <a class="" href="/transparency">Total</a>
+            
+            <form action="/logout" method="post" class="inline-form">
+              <button type="submit" class="ghost-button">Log out</button>
+            </form>
+          
+        </nav>
+      </div>
+    </header>
+
+    <main class="container page-shell">
+
+
+
+
+
+
+<section class="page-heading">
+  <div>
+    <span class="eyebrow">Donation submission</span>
+    <h1>Submit offline donation</h1>
+  </div>
+  <div class="role-pill ">
+    <span>User account</span>
+  </div>
+</section>
+
+<section class="stats-grid single-stat-grid">
+  <article class="card stat-card">
+    <span class="stat-label">Approved value</span>
+    <strong>$1,200.00</strong>
+    <span class="stat-foot">4 approved submissions</span>
+  </article>
+</section>
+
+<section class="content-grid">
+  <article class="card">
+    <h2>Submit new donation</h2>
+    <form action="/donations" method="post" class="stack-form">
+      <label>
+        <span>Donation amount</span>
+        <input type="number" name="amount" required min="0.01" step="0.01" value="" />
+      </label>
+
+      <label>
+        <span>Number sent from / bank username</span>
+        <input
+          type="text"
+          name="paymentReference"
+          maxlength="120"
+          placeholder="Phone number sent from or the bank account username"
+          value=""
+        />
+      </label>
+
+      <label>
+        <span>Note</span>
+        <textarea
+          name="donorNote"
+          rows="4"
+          placeholder="Optional note"
+        ></textarea>
+      </label>
+
+      <button type="submit" class="button">Submit for validation</button>
+    </form>
+  </article>
+
+  <article class="card">
+    <div class="section-title">
+      <h2>Recent submissions</h2>
+      <a href="/history">See full history</a>
+    </div>
+
+    
+      <div class="stack-list">
+        
+          <article class="list-card">
+            <div class="list-card-top">
+              <strong>$100.00</strong>
+              <span class="status-badge approved">approved</span>
+            </div>
+            <p><strong>Sent from / bank username:</strong> 01123456789</p>
+            <p><strong>Note:</strong> Bank transfer</p>
+            <p><strong>Submitted:</strong> Apr 18, 2026, 6:24 PM</p>
+            <p><strong>Admin note:</strong> Checked</p>
+          </article>
+        
+          <article class="list-card">
+            <div class="list-card-top">
+              <strong>$55.00</strong>
+              <span class="status-badge pending">pending</span>
+            </div>
+            <p><strong>Sent from / bank username:</strong> bank_user_77</p>
+            <p><strong>Note:</strong> -</p>
+            <p><strong>Submitted:</strong> Apr 18, 2026, 6:24 PM</p>
+            <p><strong>Admin note:</strong> -</p>
+          </article>
+        
+      </div>
+    
+  </article>
+</section>
+
+    </main>
+    <script src="file:///D:/Documents/The_web/public/app.js"></script>
+  </body>
+</html>
+

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin log - Donation Ledger</title>
+    <link rel="stylesheet" href="file:///D:/Documents/The_web/public/styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container nav-shell">
+        <a class="brand" href="/dashboard">
+          <span class="brand-mark">DL</span>
+          <span>Donation Ledger</span>
+        </a>
+
+        <nav class="nav-links">
+          
+            <a class="" href="/dashboard">Donate</a>
+            <a class="" href="/history">History</a>
+            <a class="" href="/transparency">Total</a>
+            
+              <a class="" href="/admin/review">Validate</a>
+              <a class="active" href="/admin/adjustments">Admin log</a>
+            
+            <form action="/logout" method="post" class="inline-form">
+              <button type="submit" class="ghost-button">Log out</button>
+            </form>
+          
+        </nav>
+      </div>
+    </header>
+
+    <main class="container page-shell">
+
+
+
+
+
+
+<section class="page-heading">
+  <div>
+    <span class="eyebrow">Admin total log</span>
+    <h1>Log changes to the total</h1>
+  </div>
+</section>
+
+<section class="stats-grid single-stat-grid">
+  <article class="card stat-card spotlight">
+    <span class="stat-label">Current total</span>
+    <strong>$9,500.00</strong>
+    <span class="stat-foot">Approved and removed values stay here with the admin log.</span>
+
+    <div class="summary-inline">
+      <div class="summary-chip">
+        <span class="mini-label">Approved</span>
+        <strong>$10,000.00</strong>
+      </div>
+      <div class="summary-chip">
+        <span class="mini-label">Removed</span>
+        <strong>$700.00</strong>
+      </div>
+      
+        <div class="summary-chip">
+          <span class="mini-label">Added</span>
+          <strong>$200.00</strong>
+        </div>
+      
+    </div>
+  </article>
+</section>
+
+<section class="content-grid">
+  <article class="card">
+    <h2>Record a change</h2>
+    <form action="/admin/adjustments" method="post" class="stack-form">
+      <label>
+        <span>Adjustment type</span>
+        <select name="direction">
+          <option value="remove" selected>Remove value</option>
+          <option value="add" >Add value</option>
+        </select>
+      </label>
+
+      <label>
+        <span>Amount</span>
+        <input type="number" name="amount" required min="0.01" step="0.01" value="" />
+      </label>
+
+      <label>
+        <span>Admin note</span>
+        <textarea name="note" rows="4" required placeholder="Explain why the total changed"></textarea>
+      </label>
+
+      <button type="submit" class="button">Save adjustment</button>
+    </form>
+  </article>
+
+  <article class="card">
+    <div class="section-title">
+      <h2>Recent admin log</h2>
+    </div>
+
+    
+      <div class="stack-list">
+        
+          <article class="list-card">
+            <div class="list-card-top">
+              <strong class="negative-amount">
+                -$300.00
+              </strong>
+              <span class="status-badge rejected">
+                removal
+              </span>
+            </div>
+            <p><strong>Note:</strong> Refunded duplicate transfer</p>
+            <p><strong>Admin:</strong> admin1</p>
+            <p><strong>Date:</strong> Apr 18, 2026, 6:24 PM</p>
+          </article>
+        
+          <article class="list-card">
+            <div class="list-card-top">
+              <strong class="positive-amount">
+                $200.00
+              </strong>
+              <span class="status-badge approved">
+                addition
+              </span>
+            </div>
+            <p><strong>Note:</strong> Manual correction</p>
+            <p><strong>Admin:</strong> admin2</p>
+            <p><strong>Date:</strong> Apr 18, 2026, 6:24 PM</p>
+          </article>
+        
+      </div>
+    
+  </article>
+</section>
+
+    </main>
+    <script src="file:///D:/Documents/The_web/public/app.js"></script>
+  </body>
+</html>
+

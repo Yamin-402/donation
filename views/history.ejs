@@ -1,0 +1,48 @@
+<%- include("partials/header") %>
+<%- include("partials/messages") %>
+
+<section class="page-heading">
+  <div>
+    <span class="eyebrow">Your records</span>
+    <h1>Donation history</h1>
+  </div>
+</section>
+
+<section class="card">
+  <% if (!donations.length) { %>
+    <p class="empty-state">You have not submitted any donations yet.</p>
+  <% } else { %>
+    <div class="table-shell">
+      <table>
+        <thead>
+          <tr>
+            <th>Amount</th>
+            <th>Sent from / Bank</th>
+            <th>Note</th>
+            <th>Status</th>
+            <th>Admin note</th>
+            <th>Submitted</th>
+            <th>Reviewed</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% donations.forEach((donation) => { %>
+            <tr>
+              <td><%= formatCurrency(donation.amount) %></td>
+              <td><%= donation.payment_reference || '-' %></td>
+              <td><%= donation.donor_note || '-' %></td>
+              <td>
+                <span class="status-badge <%= donation.status %>"><%= donation.status %></span>
+              </td>
+              <td><%= donation.admin_note || '-' %></td>
+              <td><%= formatDate(donation.created_at) %></td>
+              <td><%= formatDate(donation.reviewed_at) %></td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  <% } %>
+</section>
+
+<%- include("partials/footer") %>

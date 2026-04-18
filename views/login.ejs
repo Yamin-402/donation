@@ -1,0 +1,24 @@
+<%- include("partials/header") %>
+<%- include("partials/messages") %>
+
+<section class="auth-shell card narrow-card">
+  <h1>Login</h1>
+
+  <form action="/login" method="post" class="stack-form">
+    <label>
+      <span>Username</span>
+      <input type="text" name="username" required value="<%= formData.username %>" />
+    </label>
+
+    <label>
+      <span>Password</span>
+      <input type="password" name="password" required minlength="8" />
+    </label>
+
+    <button type="submit" class="button">Login</button>
+  </form>
+
+  <p class="muted-line"><a href="/signup">Create account</a></p>
+</section>
+
+<%- include("partials/footer") %>

@@ -1,0 +1,93 @@
+<%- include("partials/header") %>
+<%- include("partials/messages") %>
+
+<section class="page-heading">
+  <div>
+    <span class="eyebrow">Admin tools</span>
+    <h1>Validate submitted donations</h1>
+  </div>
+</section>
+
+<section class="card">
+  <div class="section-title">
+    <h2>Pending donations</h2>
+    <span class="subdued"><%= pendingDonations.length %> awaiting review</span>
+  </div>
+
+  <% if (!pendingDonations.length) { %>
+    <p class="empty-state">No donations are waiting for validation.</p>
+  <% } else { %>
+    <div class="stack-list">
+      <% pendingDonations.forEach((donation) => { %>
+        <article class="list-card admin-review-card">
+          <div class="admin-review-head">
+            <div>
+              <strong><%= donation.username %></strong>
+              <p><%= formatCurrency(donation.amount) %></p>
+            </div>
+            <span class="status-badge pending">pending</span>
+          </div>
+
+          <p><strong>Sent from / bank username:</strong> <%= donation.payment_reference || '-' %></p>
+          <p><strong>Note:</strong> <%= donation.donor_note || '-' %></p>
+          <p><strong>Submitted:</strong> <%= formatDate(donation.created_at) %></p>
+
+          <form action="/admin/donations/<%= donation.id %>/review" method="post" class="stack-form">
+            <label>
+              <span>Admin note</span>
+              <textarea
+                name="adminNote"
+                rows="3"
+                placeholder="Optional note explaining the decision"
+              ></textarea>
+            </label>
+
+            <div class="button-row">
+              <button type="submit" name="action" value="approved" class="button">Approve</button>
+              <button type="submit" name="action" value="rejected" class="button button-danger">Reject</button>
+            </div>
+          </form>
+        </article>
+      <% }) %>
+    </div>
+  <% } %>
+</section>
+
+<section class="card">
+  <div class="section-title">
+    <h2>Recently reviewed</h2>
+  </div>
+
+  <% if (!reviewedDonations.length) { %>
+    <p class="empty-state">No reviewed donations yet.</p>
+  <% } else { %>
+    <div class="table-shell">
+      <table>
+        <thead>
+          <tr>
+            <th>User</th>
+            <th>Amount</th>
+            <th>Status</th>
+            <th>Admin note</th>
+            <th>Reviewer</th>
+            <th>Reviewed</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% reviewedDonations.forEach((donation) => { %>
+            <tr>
+              <td><%= donation.donor_username %></td>
+              <td><%= formatCurrency(donation.amount) %></td>
+              <td><span class="status-badge <%= donation.status %>"><%= donation.status %></span></td>
+              <td><%= donation.admin_note || '-' %></td>
+              <td><%= donation.reviewer_username || '-' %></td>
+              <td><%= formatDate(donation.reviewed_at) %></td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  <% } %>
+</section>
+
+<%- include("partials/footer") %>

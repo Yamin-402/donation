@@ -1,0 +1,49 @@
+<%- include("partials/header") %>
+<%- include("partials/messages") %>
+
+<section class="page-heading">
+  <div>
+    <span class="eyebrow">Shared total</span>
+    <h1>Total</h1>
+  </div>
+</section>
+
+<section class="stats-grid single-stat-grid">
+  <article class="card stat-card spotlight">
+    <span class="stat-label">Current total</span>
+    <strong><%= formatCurrency(summary.public_total) %></strong>
+    <span class="stat-foot">Updated whenever donations are approved.</span>
+  </article>
+</section>
+
+<section class="card">
+  <div class="section-title">
+    <h2>Adjustment log</h2>
+  </div>
+
+  <% if (!adjustments.length) { %>
+    <p class="empty-state">No admin adjustments have been recorded.</p>
+  <% } else { %>
+    <div class="stack-list">
+      <% adjustments.forEach((adjustment) => { %>
+        <article class="list-card">
+          <div class="list-card-top">
+            <strong class="<%= adjustment.amount < 0 ? 'negative-amount' : 'positive-amount' %>">
+              <%= formatCurrency(adjustment.amount) %>
+            </strong>
+            <span class="status-badge <%= adjustment.amount < 0 ? 'rejected' : 'approved' %>">
+              <%= adjustment.amount < 0 ? 'removal' : 'addition' %>
+            </span>
+          </div>
+          <p><strong>Note:</strong> <%= adjustment.note %></p>
+          <p><strong>Admin:</strong> <%= adjustment.admin_username %></p>
+          <p><strong>Date:</strong> <%= formatDate(adjustment.created_at) %></p>
+        </article>
+      <% }) %>
+    </div>
+  <% } %>
+</section>
+
+
+
+<%- include("partials/footer") %>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= pageTitle %> - <%= appName %></title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container nav-shell">
+        <a class="brand" href="<%= currentUser ? '/dashboard' : '/' %>">
+          <span class="brand-mark">DL</span>
+          <span><%= appName %></span>
+        </a>
+
+        <nav class="nav-links">
+          <% if (currentUser) { %>
+            <a class="<%= currentPath === '/dashboard' ? 'active' : '' %>" href="/dashboard">Donate</a>
+            <a class="<%= currentPath === '/history' ? 'active' : '' %>" href="/history">History</a>
+            <a class="<%= currentPath === '/transparency' ? 'active' : '' %>" href="/transparency">Total</a>
+            <% if (currentUser.role === 'admin') { %>
+              <a class="<%= currentPath === '/admin/review' ? 'active' : '' %>" href="/admin/review">Validate</a>
+              <a class="<%= currentPath === '/admin/adjustments' ? 'active' : '' %>" href="/admin/adjustments">Admin log</a>
+            <% } %>
+            <form action="/logout" method="post" class="inline-form">
+              <button type="submit" class="ghost-button">Log out</button>
+            </form>
+          <% } else { %>
+            <a class="<%= currentPath === '/login' ? 'active' : '' %>" href="/login">Login</a>
+            <a class="primary-link" href="/signup">Create account</a>
+          <% } %>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container page-shell">

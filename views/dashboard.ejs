@@ -1,0 +1,57 @@
+<%- include("partials/header") %>
+<%- include("partials/messages") %>
+
+<section class="page-heading">
+  <div>
+    <span class="eyebrow">خير الأعمال أدومها وان قل</span>
+    <h1>submit donation</h1>
+  </div>
+  <div class="role-pill <%= currentUser.role === 'admin' ? 'admin' : '' %>">
+    <span><%= currentUser.role === 'admin' ? 'Admin account' : 'User account' %></span>
+  </div>
+</section>
+
+<section class="stats-grid single-stat-grid">
+  <article class="card stat-card">
+    <span class="stat-label">Approved value</span>
+    <strong><%= formatCurrency(stats.approved_total) %></strong>
+    <span class="stat-foot"><%= stats.approved_count %> approved submissions</span>
+  </article>
+</section>
+
+<section class="content-grid">
+  <article class="card">
+    <h2>Submit new donation</h2>
+    <form action="/donations" method="post" class="stack-form">
+      <label>
+        <span>Donation amount</span>
+        <input type="number" name="amount" required min="0.01" step="0.01" value="<%= formData.amount %>" />
+      </label>
+
+      <label>
+        <span>Number sent from / bank username</span>
+        <input
+          type="text"
+          name="paymentReference"
+          maxlength="120"
+          placeholder="Phone number or account username"
+          value="<%= formData.paymentReference %>"
+        />
+      </label>
+
+      <label>
+        <span>Note</span>
+        <textarea
+          name="donorNote"
+          rows="4"
+          placeholder="Optional note"
+        ><%= formData.donorNote %></textarea>
+      </label>
+
+      <button type="submit" class="button">Submit for validation</button>
+    </form>
+  </article>
+
+  
+
+<%- include("partials/footer") %>
