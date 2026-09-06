@@ -41,6 +41,11 @@ public class AuthController {
     return Map.of("token", token.getToken());
   }
 
+  @GetMapping("/providers")
+  public Map<String, Boolean> providers() {
+    return Map.of("googleEnabled", properties.hasGoogleOAuth());
+  }
+
   @GetMapping("/me")
   public Map<String, Object> me(Authentication authentication) {
     return Map.of("user", user(authentication), "currencyCode", properties.getCurrencyCode());

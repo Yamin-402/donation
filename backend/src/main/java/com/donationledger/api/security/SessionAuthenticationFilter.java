@@ -23,6 +23,7 @@ public class SessionAuthenticationFilter extends OncePerRequestFilter {
   @Override
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
     throws ServletException, IOException {
+    SecurityContextHolder.clearContext();
     String sessionId = sessionService.readCookie(request);
     sessionService.findCurrentUser(sessionId).ifPresent(user -> {
       var authentication = new UsernamePasswordAuthenticationToken(

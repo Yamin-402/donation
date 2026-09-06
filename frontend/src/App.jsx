@@ -141,7 +141,7 @@ function Login() {
   const { refreshSession } = useAuth();
   const navigate = useNavigate();
   const [form, setForm] = useState({ email: "", password: "" });
-  const [error, setError] = useState("");
+  const [error, setError] = useState(readGoogleError);
   const [saving, setSaving] = useState(false);
 
   async function submit(event) {
@@ -158,6 +158,7 @@ function Login() {
     <Field label="Password" type="password" value={form.password} onChange={(password) => setForm({ ...form, password })} autoComplete="current-password" />
     <Notice message={error} />
     <button className="button primary wide" disabled={saving}>{saving ? "Signing in…" : "Sign in"}</button>
+    <GoogleSignIn />
   </form><p className="auth-switch">New here? <Link to="/register">Create an account</Link></p></AuthFrame>;
 }
 
@@ -184,11 +185,42 @@ function Register() {
     {showAdmin && <Field label="Optional admin code" type="password" value={form.adminCode} onChange={(adminCode) => setForm({ ...form, adminCode })} required={false} />}
     <Notice message={error} />
     <button className="button primary wide" disabled={saving}>{saving ? "Creating…" : "Create account"}</button>
+    <GoogleSignIn />
   </form><p className="auth-switch">Already registered? <Link to="/login">Sign in</Link></p></AuthFrame>;
 }
 
 function AuthFrame({ title, hint, children }) {
   return <main className="auth-page"><Link className="brand auth-brand" to="/"><span>DL</span><strong>Donation Ledger</strong></Link><section className="auth-card"><p className="kicker">Private account</p><h1>{title}</h1><p className="auth-hint">{hint}</p>{children}</section></main>;
+}
+
+function GoogleSignIn() {
+  const [enabled, setEnabled] = useState(false);
+
+  useEffect(() => {
+    api("/auth/providers")
+      .then((providers) => setEnabled(Boolean(providers.googleEnabled)))
+      .catch(() => setEnabled(false));
+  }, []);
+
+  if (!enabled) return null;
+
+  return <div className="google-auth">
+    <div className="auth-divider"><span>or</span></div>
+    <button type="button" className="google-button" onClick={() => window.location.assign("/oauth2/authorization/google")}>
+      <span aria-hidden="true">G</span>
+      Continue with Google
+    </button>
+  </div>;
+}
+
+function readGoogleError() {
+  const query = window.location.hash.split("?")[1] || "";
+  const error = new URLSearchParams(query).get("error");
+
+  if (error === "google_email_not_verified") return "Google did not provide a verified email address.";
+  if (error === "google_sign_in_failed") return "Google sign-in could not be completed. Please try again.";
+  if (error === "google_account_conflict") return "This email is already linked to a different Google account.";
+  return "";
 }
 
 function Donate() {
