@@ -1,0 +1,13 @@
+1- email instead of username
+2- make backend sepreated in a server
+3- susbsutitue ejs to html/css
+4- there is a daily counter that adds temporary money
+5- there is user settings, where he can add standard number/ bank account name, change his username, add his daily outing money
+6- save the last time the user donated date and write the number of days he didn't donate and how much he has to pay regarding his daily money
+7- fix the dimensions issues for mobile view
+8- add payment method, and control it from admin panel
+
+general notes :
+
+1- reminders through telegram
+2- tutorial

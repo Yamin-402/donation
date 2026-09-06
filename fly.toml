@@ -2,8 +2,8 @@ app = "change-this-donation-app"
 primary_region = "iad"
 
 [env]
-  NODE_ENV = "production"
   PORT = "8080"
+  COOKIE_SECURE = "true"
 
 [http_service]
   internal_port = 8080
