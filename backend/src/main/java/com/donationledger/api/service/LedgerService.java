@@ -4,7 +4,9 @@ import com.donationledger.api.data.LedgerRepository;
 import com.donationledger.api.model.AppUser;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
@@ -33,7 +35,7 @@ public class LedgerService {
 
   public Map<String, Object> dashboard(AppUser user) {
     Map<String, Object> dashboard = new LinkedHashMap<>(repository.getDashboard(user.id()));
-    OffsetDateTime lastDonationAt = (OffsetDateTime) dashboard.get("lastDonationAt");
+    OffsetDateTime lastDonationAt = toOffsetDateTime(dashboard.get("lastDonationAt"));
     long daysSinceLastDonation = lastDonationAt == null
       ? 0
       : Math.max(0, ChronoUnit.DAYS.between(lastDonationAt.withOffsetSameInstant(ZoneOffset.UTC).toLocalDate(), LocalDate.now(ZoneOffset.UTC)));
@@ -44,6 +46,15 @@ public class LedgerService {
     dashboard.put("suggestedAmount", dailyTarget.multiply(BigDecimal.valueOf(daysSinceLastDonation)).setScale(2, RoundingMode.HALF_UP));
     dashboard.put("paymentProfiles", repository.findPaymentProfiles(user.id()));
     return dashboard;
+  }
+
+  private OffsetDateTime toOffsetDateTime(Object value) {
+    if (value == null) return null;
+    if (value instanceof OffsetDateTime timestamp) return timestamp;
+    if (value instanceof Timestamp timestamp) return timestamp.toInstant().atOffset(ZoneOffset.UTC);
+    if (value instanceof LocalDateTime timestamp) return timestamp.atOffset(ZoneOffset.UTC);
+    if (value instanceof java.time.Instant timestamp) return timestamp.atOffset(ZoneOffset.UTC);
+    throw new IllegalStateException("Unsupported donation timestamp type: " + value.getClass().getName());
   }
 
   @Transactional
